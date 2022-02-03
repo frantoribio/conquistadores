@@ -4,7 +4,7 @@ public class Juego {
 
     final private int FILAS=3;
     final private int COLUMNAS=4;
-    private final String [][] MAPA;
+    public final String [][] MAPA;
     private String recurso;
 
     public Juego() {
@@ -27,10 +27,7 @@ public class Juego {
         return recurso;
     }
 
-
     public void llenarMapa() {
-
-
         for (int i = 0; i < MAPA.length; i++) {
             for (int j= 0; j < MAPA[i].length; j++) {
                 recursoCasilla();
@@ -38,17 +35,15 @@ public class Juego {
                 int contadorMadera = 0;
                 int contadorCarbon = 0;
                 if (recurso=="TRIGO" && contadorTrigo <= 3) {
-                    MAPA[i][j] = "{TRIGO  " + tirarDado() + "} ";
+                    MAPA[i][j] = "{Casilla " + (i+1) + "-" + (j+1) + "  TRIGO " + tirarDado() + "} ";
                     contadorTrigo++;
                 }
-
                 else if (recurso=="MADERA" && contadorMadera <= 3) {
-                MAPA[i][j] = "{MADERA " + tirarDado() + "} ";
+                MAPA[i][j] = "{Casilla " + (i+1) + "-" + (j+1) + " MADERA " + tirarDado() + "} ";
                 contadorMadera++;
                 }
-
                 else if (recurso=="CARBON" && contadorCarbon <= 3) {
-                MAPA[i][j] = "{CARBON " + tirarDado() + "} ";
+                MAPA[i][j] = "{Casilla " + (i+1) + "-" + (j+1) + " CARBON " + tirarDado() + "} ";
                 contadorCarbon++;
                 }
             }
@@ -63,7 +58,9 @@ public class Juego {
             }
             System.out.println();
         }
+    }
+    public void elegirCasilla(){
+        System.out.println("¿Qué casilla quieres ocupar?");
 
     }
-
 }
