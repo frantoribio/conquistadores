@@ -9,7 +9,7 @@ public class Main {
 
         catan.llenarMapa();
         catan.imprimirMapa();
-
-
+        catan.elegirCasilla();
     }
+
 }
