@@ -16,9 +16,9 @@ public class Juego {
     }
 
     public int tirarDado() {
-        int resultadoDado = (int)(Math.random()*6 +1);
-        return resultadoDado;
+        return (int)(Math.random()*6 +1);
     }
+
     public String recursoCasilla(){
         int numeroRandom = (int)(Math.random()*3+1);
         if (numeroRandom == 1) {
@@ -51,6 +51,7 @@ public class Juego {
             }
         }
     }
+
     public void imprimirMapa(){
         llenarMapa();
         for (int i = 0; i < MAPA.length; i++) {
@@ -63,7 +64,7 @@ public class Juego {
     }
 
 
-    public void elegirCasilla() {
+    public void elegirCasillaHumano() {
         Scanner scanner = new Scanner(System.in);
         boolean ok;
         int elegirFila=10;
@@ -83,7 +84,7 @@ public class Juego {
             }catch (Exception e){
                 System.out.println("Introduce un entero");
                 scanner.next();}
-            ok = verificarCasilla(elegirFila,elegirColumna);
+            ok = verificarCasillaHumano(elegirFila,elegirColumna);
         } while (!ok);
 
         ocuparCasillaHumano(elegirFila,elegirColumna);
@@ -91,31 +92,69 @@ public class Juego {
     }
 
     private void ocuparCasillaHumano(int elegirFila, int elegirColumna) {
-        for (int i = 0; i < MAPA.length; i++) {
-            for (int j= 0; j < MAPA[i].length; j++) {
+        for (String[] value : MAPA) {
+            for (int j = 0; j < value.length; j++) {
             }
         }
-        MAPA[elegirFila][elegirColumna]=MAPA[elegirFila][elegirColumna].concat("HUMANO} ");
-        for (int i = 0; i < MAPA.length; i++) {
+        MAPA[elegirFila][elegirColumna] = MAPA[elegirFila][elegirColumna].concat("HUMANO} ");
+        for (String[] strings : MAPA) {
             System.out.println();
-            for (int j = 0; j < MAPA[i].length; j++) {
-                System.out.print(MAPA[i][j]);
+            for (String string : strings) {
+                System.out.print(string);
             }
             System.out.println();
         }
     }
 
-    public boolean verificarCasilla(int elegirFila, int elegirColumna) {
+    public boolean verificarCasillaHumano(int elegirFila, int elegirColumna) {
         boolean verificar = elegirFila > FILAS ||
                 elegirColumna > COLUMNAS ||
                 elegirFila == -1 || elegirColumna == -1;
         if (verificar) {
             System.out.println("Casilla incorrecta");
             return false;
-        }else if (MAPA[elegirFila][elegirColumna].contains("PC HUMANO" )) {
+        }else if (MAPA[elegirFila][elegirColumna].contains("PC") ||
+                MAPA[elegirFila][elegirColumna].contains("HUMANO")) {
             System.out.println("Esta casilla está ocupado");
             return false;
         }else
             return true;
+    }
+
+    public void elegirCasillaPc() {
+        boolean ok;
+        int filaRandom = (int)Math.random()*2;
+        int columnaRandom = (int)Math.random()*3;
+        do {
+            ok = verificarCasillaPc(filaRandom, columnaRandom);
+        } while (!ok);
+        ocuparCasillaPc(filaRandom,columnaRandom);
+    }
+
+    private boolean verificarCasillaPc(int filaRandom, int columnaRandom) {
+        boolean ok = false;
+        do{
+            if (MAPA[filaRandom][columnaRandom].contains("PC") ||
+                    MAPA[filaRandom][columnaRandom].contains("HUMANO")) {
+                ok = false;
+            }else ok=true;
+        }while (!ok);
+        return true;
+    }
+
+
+    public void ocuparCasillaPc(int filaRandom, int columnaRandom) {
+        for (String[] value : MAPA) {
+            for (int j = 0; j < value.length; j++) {
+            }
+        }
+        MAPA[filaRandom][columnaRandom] = MAPA[filaRandom][columnaRandom].concat("PC} ");
+        for (String[] strings : MAPA) {
+            System.out.println();
+            for (String string : strings) {
+                System.out.print(string);
+            }
+            System.out.println();
+        }
     }
 }
