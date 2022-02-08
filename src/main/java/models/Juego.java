@@ -10,13 +10,13 @@ public class Juego {
     private String recurso;
 
     public Juego() {
-        int FILAS=3;
-        int COLUMNAS=4;
+        int FILAS=this.FILAS;
+        int COLUMNAS=this.COLUMNAS;
         this.MAPA = new String[FILAS][COLUMNAS];
     }
 
     public int tirarDado() {
-        return (int)(Math.random()*6 +1);
+        return (int)(Math.random()*6 + 1);
     }
 
     public String recursoCasilla(){
@@ -37,15 +37,15 @@ public class Juego {
                 int contadorMadera = 0;
                 int contadorCarbon = 0;
                 if (recurso=="TRIGO" && contadorTrigo <= 3) {
-                    MAPA[i][j] = "{Casilla " + (i+1) + "-" + (j+1) + "  TRIGO " + tirarDado() + " ";
+                    MAPA[i][j] = "{Casilla " + (i+1) + "-" + (j+1) + "  TRIGO " + tirarDado() + " -> ";
                     contadorTrigo++;
                 }
                 else if (recurso=="MADERA" && contadorMadera <= 3) {
-                MAPA[i][j] = "{Casilla " + (i+1) + "-" + (j+1) + " MADERA " + tirarDado() + " ";
+                MAPA[i][j] = "{Casilla " + (i+1) + "-" + (j+1) + " MADERA " + tirarDado() + " -> ";
                 contadorMadera++;
                 }
                 else if (recurso=="CARBON" && contadorCarbon <= 3) {
-                MAPA[i][j] = "{Casilla " + (i+1) + "-" + (j+1) + " CARBON " + tirarDado() + " ";
+                MAPA[i][j] = "{Casilla " + (i+1) + "-" + (j+1) + " CARBON " + tirarDado() + " -> ";
                 contadorCarbon++;
                 }
             }
@@ -63,13 +63,11 @@ public class Juego {
         }
     }
 
-
     public void elegirCasillaHumano() {
         Scanner scanner = new Scanner(System.in);
         boolean ok;
-        int elegirFila=10;
-        int elegirColumna=10;
-
+        int elegirFila = 10;
+        int elegirColumna = 10;
         do {
             System.out.println("\nIntroduce un número de fila: ");
             try {
@@ -86,9 +84,7 @@ public class Juego {
                 scanner.next();}
             ok = verificarCasillaHumano(elegirFila,elegirColumna);
         } while (!ok);
-
         ocuparCasillaHumano(elegirFila,elegirColumna);
-
     }
 
     private void ocuparCasillaHumano(int elegirFila, int elegirColumna) {
@@ -121,27 +117,19 @@ public class Juego {
             return true;
     }
 
+    public boolean verificarCasillaPc(int filaRandom, int columnaRandom) {
+        return MAPA[filaRandom][columnaRandom].contains("PC") ||
+                MAPA[filaRandom][columnaRandom].contains("HUMANO");
+    }
+
     public void elegirCasillaPc() {
-        boolean ok;
-        int filaRandom = (int)Math.random()*2;
-        int columnaRandom = (int)Math.random()*3;
-        do {
-            ok = verificarCasillaPc(filaRandom, columnaRandom);
-        } while (!ok);
+        int filaRandom = (int)(Math.random()*3);
+        int columnaRandom = (int)(Math.random()*4);
+        if (verificarCasillaPc(filaRandom, columnaRandom))
+        System.out.println();
+        System.out.println("Eligiendo el Pc.");
         ocuparCasillaPc(filaRandom,columnaRandom);
     }
-
-    private boolean verificarCasillaPc(int filaRandom, int columnaRandom) {
-        boolean ok = false;
-        do{
-            if (MAPA[filaRandom][columnaRandom].contains("PC") ||
-                    MAPA[filaRandom][columnaRandom].contains("HUMANO")) {
-                ok = false;
-            }else ok=true;
-        }while (!ok);
-        return true;
-    }
-
 
     public void ocuparCasillaPc(int filaRandom, int columnaRandom) {
         for (String[] value : MAPA) {

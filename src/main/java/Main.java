@@ -9,8 +9,9 @@ public class Main {
 
         catan.llenarMapa();
         catan.imprimirMapa();
-        catan.elegirCasillaHumano();
-        catan.elegirCasillaPc();
+        for (int i=0;i<=5;i++){
+            catan.elegirCasillaHumano();
+            catan.elegirCasillaPc();
+        }
     }
-
 }
