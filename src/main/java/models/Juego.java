@@ -112,22 +112,22 @@ public class Juego {
             return false;
         }else if (MAPA[elegirFila][elegirColumna].contains("PC") ||
                 MAPA[elegirFila][elegirColumna].contains("HUMANO")) {
-            System.out.println("Esta casilla está ocupado");
+            System.out.println("Esta casilla está ocupada");
             return false;
         }else
             return true;
     }
 
     public boolean verificarCasillaPc(int filaRandom, int columnaRandom) {
-        return MAPA[filaRandom][columnaRandom].contains("PC") ||
-                MAPA[filaRandom][columnaRandom].contains("HUMANO");
+        return !MAPA[filaRandom][columnaRandom].contains("PC") ||
+                !MAPA[filaRandom][columnaRandom].contains("HUMANO");
     }
 
     public void elegirCasillaPc() {
         int filaRandom = (int)(Math.random()*3);
         int columnaRandom = (int)(Math.random()*4);
         if (verificarCasillaPc(filaRandom, columnaRandom)
-                &comprobarRecursoPc(filaRandom,columnaRandom))
+                & comprobarRecursoPc(filaRandom,columnaRandom))
         System.out.println();
         System.out.println("Eligiendo el Pc.");
         ocuparCasillaPc(filaRandom,columnaRandom);
@@ -147,8 +147,9 @@ public class Juego {
             System.out.println();
         }
     }
+
     public boolean comprobarRecursoPc(int filaRandom, int columnaRandom) {
-        boolean ok;
+        boolean ok = false;
         int casillaPcMadera = 0;
         int casillaPcCarbon = 0;
         int casillaPcTrigo = 0;
@@ -165,11 +166,13 @@ public class Juego {
                         MAPA[filaRandom][columnaRandom].contains("CARBON"))
                     casillaPcCarbon++;
             }
-        } if (casillaPcTrigo>3||casillaPcMadera>3||casillaPcCarbon>3){
+        }
+        if ((casillaPcTrigo > 2) || (casillaPcMadera > 2) || (casillaPcCarbon > 2 )){
             ok = false;
         } else ok = true;
         return ok;
     }
+
     public boolean comprobarRecursoHumano(int elegirFila, int elegirColumna) {
         boolean ok = false;
         int casillaHumanoMadera = 0;
@@ -177,19 +180,20 @@ public class Juego {
         int casillaHumanoTrigo = 0;
         for (String[] value : MAPA) {
             for (int j = 0; j < value.length; j++) {
-                if (MAPA[elegirFila][elegirColumna].contains("PC")&
-                        MAPA[elegirFila][elegirColumna].contains("TRIGO")){
+                if (MAPA[elegirFila][elegirColumna].contains("PC") &
+                        MAPA[elegirFila][elegirColumna].contains("TRIGO")) {
                     casillaHumanoTrigo++;
-                }
-                else if (MAPA[elegirFila][elegirColumna].contains("PC")&
-                        MAPA[elegirFila][elegirColumna].contains("MADERA")){
+                } else if (MAPA[elegirFila][elegirColumna].contains("PC") &
+                        MAPA[elegirFila][elegirColumna].contains("MADERA")) {
                     casillaHumanoMadera++;
-                }else if (MAPA[elegirFila][elegirColumna].contains("PC")&
+                } else if (MAPA[elegirFila][elegirColumna].contains("PC") &
                         MAPA[elegirFila][elegirColumna].contains("CARBON"))
                     casillaHumanoCarbon++;
             }
-        } if (casillaHumanoTrigo>3||casillaHumanoMadera>3||casillaHumanoCarbon>3){
+        }
+        if ((casillaHumanoTrigo > 2) || (casillaHumanoMadera > 2) || (casillaHumanoCarbon > 2)) {
             ok = false;
+            System.out.println("La elección del recurso está completa, elige otro recurso");
         } else ok = true;
         return ok;
     }
