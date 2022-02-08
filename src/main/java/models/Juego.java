@@ -82,7 +82,8 @@ public class Juego {
             }catch (Exception e){
                 System.out.println("Introduce un entero");
                 scanner.next();}
-            ok = verificarCasillaHumano(elegirFila,elegirColumna);
+            ok = verificarCasillaHumano(elegirFila,elegirColumna)&
+                    comprobarRecursoHumano(elegirFila, elegirColumna);
         } while (!ok);
         ocuparCasillaHumano(elegirFila,elegirColumna);
     }
@@ -125,7 +126,8 @@ public class Juego {
     public void elegirCasillaPc() {
         int filaRandom = (int)(Math.random()*3);
         int columnaRandom = (int)(Math.random()*4);
-        if (verificarCasillaPc(filaRandom, columnaRandom))
+        if (verificarCasillaPc(filaRandom, columnaRandom)
+                &comprobarRecursoPc(filaRandom,columnaRandom))
         System.out.println();
         System.out.println("Eligiendo el Pc.");
         ocuparCasillaPc(filaRandom,columnaRandom);
@@ -145,4 +147,51 @@ public class Juego {
             System.out.println();
         }
     }
+    public boolean comprobarRecursoPc(int filaRandom, int columnaRandom) {
+        boolean ok;
+        int casillaPcMadera = 0;
+        int casillaPcCarbon = 0;
+        int casillaPcTrigo = 0;
+        for (String[] value : MAPA) {
+            for (int j = 0; j < value.length; j++) {
+                if (MAPA[filaRandom][columnaRandom].contains("PC")&
+                        MAPA[filaRandom][columnaRandom].contains("TRIGO")){
+                    casillaPcTrigo++;
+                }
+                else if (MAPA[filaRandom][columnaRandom].contains("PC")&
+                        MAPA[filaRandom][columnaRandom].contains("MADERA")){
+                    casillaPcMadera++;
+                }else if (MAPA[filaRandom][columnaRandom].contains("PC")&
+                        MAPA[filaRandom][columnaRandom].contains("CARBON"))
+                    casillaPcCarbon++;
+            }
+        } if (casillaPcTrigo>3||casillaPcMadera>3||casillaPcCarbon>3){
+            ok = false;
+        } else ok = true;
+        return ok;
+    }
+    public boolean comprobarRecursoHumano(int elegirFila, int elegirColumna) {
+        boolean ok = false;
+        int casillaHumanoMadera = 0;
+        int casillaHumanoCarbon = 0;
+        int casillaHumanoTrigo = 0;
+        for (String[] value : MAPA) {
+            for (int j = 0; j < value.length; j++) {
+                if (MAPA[elegirFila][elegirColumna].contains("PC")&
+                        MAPA[elegirFila][elegirColumna].contains("TRIGO")){
+                    casillaHumanoTrigo++;
+                }
+                else if (MAPA[elegirFila][elegirColumna].contains("PC")&
+                        MAPA[elegirFila][elegirColumna].contains("MADERA")){
+                    casillaHumanoMadera++;
+                }else if (MAPA[elegirFila][elegirColumna].contains("PC")&
+                        MAPA[elegirFila][elegirColumna].contains("CARBON"))
+                    casillaHumanoCarbon++;
+            }
+        } if (casillaHumanoTrigo>3||casillaHumanoMadera>3||casillaHumanoCarbon>3){
+            ok = false;
+        } else ok = true;
+        return ok;
+    }
+
 }
